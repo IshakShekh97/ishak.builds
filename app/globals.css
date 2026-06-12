@@ -50,8 +50,8 @@
 
 :root {
   /* Premium Stark Light Mode: Clean Editorial Cream/Bone Base */
-  --background: oklch(0.96 0.008 30);
-  --foreground: oklch(0.12 0.015 30);
+  --background: oklch(100% 0.00011 271.152);
+  --foreground: oklch(0% 0 0);
 
   --card: oklch(0.93 0.01 30);
   --card-foreground: oklch(0.12 0.015 30);
@@ -70,7 +70,7 @@
   --muted-foreground: oklch(0.45 0.015 30);
 
   /* Industrial Amber Pop */
-  --accent: oklch(0.74 0.16 45);
+  --accent: oklch(70.737% 0.18926 43.431);
   --accent-foreground: oklch(0.12 0.015 30);
 
   --destructive: oklch(0.55 0.22 25);
@@ -101,11 +101,11 @@
 
 .dark {
   /* Heavy Cyber Brutalist: Deep Ink Black with a hint of Earth Warmth */
-  --background: oklch(0.1 0.012 30);
-  --foreground: oklch(0.98 0 0);
+  --background: oklch(0% 0 0);
+  --foreground: oklch(100% 0.00011 271.152);
 
   /* Structured Panels */
-  --card: oklch(0.14 0.014 30);
+  --card: oklch(12.67% 0.01561 31.687);
   --card-foreground: oklch(0.98 0 0);
 
   --popover: oklch(0.12 0.012 30);
@@ -122,7 +122,7 @@
   --muted-foreground: oklch(0.62 0.015 30);
 
   /* Piercing Industrial Safety Amber Accent */
-  --accent: oklch(0.74 0.16 45);
+  --accent: oklch(69.383% 0.20377 41.404);
   --accent-foreground: oklch(0.1 0.012 30);
 
   --destructive: oklch(0.55 0.22 25);

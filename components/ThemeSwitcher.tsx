@@ -12,6 +12,7 @@ export function ThemeSwitcher() {
         variant="square"
         theme={resolvedTheme === "dark" ? "dark" : "light"}
         onThemeChange={setTheme}
+        className="bg-secondary p-2 border-accent border hover:bg-accent transition-all"
       />
     </div>
   );
