@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import PixelPreloader from "@/components/PixelPreloader";
+import TerminalBackground from "@/components/TerminalBackground";
 
 const fontSans = Syne({
   subsets: ["latin"],
@@ -42,7 +43,10 @@ export default function RootLayout({
         fontMono.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">
+      <body
+        className="min-h-full flex flex-col relative"
+        suppressHydrationWarning
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -50,6 +54,7 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <PixelPreloader />
+          <TerminalBackground />
           <Navbar />
           {children}
         </ThemeProvider>
