@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import PixelPreloader from "@/components/PixelPreloader";
 
 const fontSans = Syne({
   subsets: ["latin"],
@@ -48,6 +49,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange={false}
         >
+          <PixelPreloader />
           <Navbar />
           {children}
         </ThemeProvider>
