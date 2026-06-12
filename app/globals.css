@@ -160,8 +160,10 @@
   }
 }
 
+/* biome-ignore lint/correctness/noUnknownTypeSelector: View Transition API pseudo-elements */
 ::view-transition-old(root),
-::view-transition-new(root) {
+/* biome-ignore lint/correctness/noUnknownTypeSelector: View Transition API pseudo-elements */
+  ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
