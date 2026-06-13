@@ -36,9 +36,9 @@ export default function Skills() {
     <motion.section
       initial={{ opacity: 0, y: 45 }}
       whileInView={isCompleted ? { opacity: 1, y: 0 } : { opacity: 0, y: 45 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-      className="w-full bg-transparent backdrop-blur-[3px] shadow-2xl shadow-foreground  py-8 border-y border-accent/40 relative z-20 flex flex-col gap-6 select-none"
+      viewport={{ once: false, margin: "-80px" }}
+      transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] as const }}
+      className="w-full bg-transparent backdrop-blur-[3px] shadow-2xl shadow-foreground/20  py-8 border-y border-accent/40 relative z-20 flex flex-col gap-6 select-none"
     >
       <ScrollVelocityContainer className="flex flex-col gap-2 md:gap-5">
         {/* Row 1: Left-to-Right Scrolling, Pauses on Hover */}
@@ -47,7 +47,7 @@ export default function Skills() {
             {row1.map((skill) => (
               <span
                 key={skill}
-                className="inline-block text-foreground px-6 py-2.5 sm:px-8 sm:py-3.5 text-3xl sm:text-5xl md:text-7xl uppercase font-sans font-black tracking-tighter hover:bg-accent bg-clip-text  hover:text-transparent hover:border-accent transition-all duration-200 cursor-crosshair"
+                className="inline-block text-muted-foreground px-6 py-2.5 sm:px-8 sm:py-3.5 text-3xl sm:text-5xl md:text-7xl uppercase font-sans font-black tracking-tighter hover:bg-accent bg-clip-text  hover:text-transparent hover:border-accent transition-all duration-200 cursor-crosshair"
               >
                 {skill}
               </span>

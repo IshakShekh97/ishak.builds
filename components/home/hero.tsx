@@ -79,7 +79,8 @@ export default function Hero() {
   return (
     <motion.main
       initial={{ opacity: 0 }}
-      animate={isCompleted ? { opacity: 1 } : { opacity: 0 }}
+      whileInView={isCompleted ? { opacity: 1 } : { opacity: 0 }}
+      viewport={{ once: false, margin: "-100px" }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="min-h-screen mx-auto w-full p-4 sm:p-6 md:p-12 pt-28 sm:pt-32 md:pt-36 flex flex-col justify-center items-stretch text-foreground gap-8 md:gap-12"
     >
@@ -101,7 +102,8 @@ export default function Hero() {
               <motion.div
                 variants={wordVariants}
                 initial="hidden"
-                animate={isCompleted ? "visible" : "hidden"}
+                whileInView={isCompleted ? "visible" : "hidden"}
+                viewport={{ once: false, margin: "-100px" }}
                 className="text-foreground"
               >
                 {splitWord("BUILT")}
@@ -117,13 +119,13 @@ export default function Hero() {
                 {/* Blocky Call to Actions */}
                 <div className="flex flex-wrap gap-3 items-center z-10 pointer-events-auto">
                   <PixelButton
-                    href="#archive"
+                    href="/archive"
                     className="flex items-center gap-1.5 px-3 py-2 sm:px-5 sm:py-3"
                   >
                     EXPLORE ARCHIVE <ArrowUpRight size={14} />
                   </PixelButton>
                   <PixelButton
-                    href="#connect"
+                    href="/book"
                     className="border-accent text-accent shadow-[4px_4px_0px_var(--color-primary)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_var(--color-primary)] px-3 py-2 sm:px-5 sm:py-3"
                   >
                     [ CONNECT ]
@@ -135,7 +137,8 @@ export default function Hero() {
               <motion.div
                 variants={wordVariants}
                 initial="hidden"
-                animate={isCompleted ? "visible" : "hidden"}
+                whileInView={isCompleted ? "visible" : "hidden"}
+                viewport={{ once: false, margin: "-100px" }}
                 className="text-foreground"
               >
                 {splitWord("DIFFERENT")}
@@ -246,8 +249,8 @@ export default function Hero() {
       <motion.section
         initial={{ opacity: 0, y: 30 }}
         whileInView={isCompleted ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-        viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+        viewport={{ once: false, margin: "-50px" }}
+        transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] as const }}
         className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-10 border-t border-border/30 w-full relative z-20"
       >
         {/* Intro Section */}

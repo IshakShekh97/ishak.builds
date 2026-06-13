@@ -180,7 +180,7 @@ export default function PixelPreloader() {
             animate={isExiting ? "hidden" : "visible"}
             transition={{
               duration: 0.4,
-              ease: [0.76, 0, 0.24, 1], // Snippy brutalist bezier curve
+              ease: [0.76, 0, 0.24, 1] as const, // Snippy brutalist bezier curve
               delay: getCellDelay(i),
             }}
             className={cn(

@@ -10,6 +10,8 @@ interface PixelButtonProps {
   className?: string;
   href?: string;
   onClick?: () => void;
+  disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 export function PixelButton({
@@ -17,6 +19,8 @@ export function PixelButton({
   className,
   href,
   onClick,
+  disabled = false,
+  type = "button",
 }: PixelButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
   const GRID_SIZE = 8; // 8 block segments
@@ -32,10 +36,10 @@ export function PixelButton({
               // biome-ignore lint/suspicious/noArrayIndexKey: Static hover grid cells order never changes
               key={i}
               initial={{ scaleY: 0 }}
-              animate={{ scaleY: isHovered ? 1 : 0 }}
+              animate={{ scaleY: !disabled && isHovered ? 1 : 0 }}
               transition={{
                 duration: 0.2,
-                ease: [0.19, 1, 0.22, 1],
+                ease: [0.19, 1, 0.22, 1] as const,
                 delay: isHovered ? delay : 0.12 - delay,
               }}
               style={{ originY: i % 2 === 0 ? 0 : 1 }}
@@ -54,13 +58,14 @@ export function PixelButton({
 
   const buttonClasses = cn(
     "relative overflow-hidden border-2 border-foreground font-mono text-[10px] sm:text-xs uppercase px-4 sm:px-6 py-2.5 sm:py-3 font-bold transition-all duration-300 active:translate-x-[2px] active:translate-y-[2px] select-none",
-    isHovered
+    !disabled && isHovered
       ? "text-background border-foreground shadow-[2px_2px_0px_var(--color-accent)]"
       : "text-foreground bg-transparent shadow-[4px_4px_0px_var(--color-accent)]",
+    disabled && "opacity-50 cursor-not-allowed pointer-events-none",
     className,
   );
 
-  if (href) {
+  if (href && !disabled) {
     return (
       <Link
         href={href}
@@ -76,9 +81,10 @@ export function PixelButton({
 
   return (
     <button
-      type="button"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      type={type}
+      disabled={disabled}
+      onMouseEnter={() => !disabled && setIsHovered(true)}
+      onMouseLeave={() => !disabled && setIsHovered(false)}
       onClick={onClick}
       className={buttonClasses}
     >

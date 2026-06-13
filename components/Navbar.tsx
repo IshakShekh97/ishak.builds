@@ -54,7 +54,7 @@ const Navbar = () => {
 
       <div className="flex items-center gap-2 sm:gap-4">
         <ThemeSwitcher />
-        <PixelButton href="/connect">[CONNECT]</PixelButton>
+        <PixelButton href="/book">[CONNECT]</PixelButton>
       </div>
     </header>
   );

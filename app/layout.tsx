@@ -3,6 +3,7 @@ import { JetBrains_Mono, Lora, Syne } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import PixelPreloader from "@/components/PixelPreloader";
 import { PreloaderProvider } from "@/components/PreloaderContext";
@@ -59,6 +60,7 @@ export default function RootLayout({
             <TerminalBackground />
             <Navbar />
             {children}
+            <Footer />
           </PreloaderProvider>
         </ThemeProvider>
       </body>
