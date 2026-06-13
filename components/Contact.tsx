@@ -12,6 +12,7 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
+import { sendContactEmail } from "@/app/actions/emailActions";
 import { Field } from "@/components/ui/field";
 import { usePreloader } from "./PreloaderContext";
 import { PixelButton } from "./ui/PixelButton";
@@ -71,18 +72,9 @@ export default function Contact() {
     }
 
     try {
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.senderName,
-          email: data.senderEmail,
-          subject: data.projectSubject,
-          message: data.clientMessage,
-        }),
-      });
+      const response = await sendContactEmail(data);
 
-      if (response.ok) {
+      if (response.success) {
         setSubmitLogs((prev) => [
           ...prev,
           "DONE // HANDSHAKE SUCCESSFUL [STATUS_200]",
@@ -93,7 +85,7 @@ export default function Contact() {
       } else {
         setSubmitLogs((prev) => [
           ...prev,
-          "ERR // DISPATCH FAILED [STATUS_500]",
+          `ERR // DISPATCH FAILED: ${response.error || "Unknown server error"}`,
         ]);
       }
     } catch (err: unknown) {

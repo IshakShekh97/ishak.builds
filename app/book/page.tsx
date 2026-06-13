@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
+import { sendBookingEmail } from "@/app/actions/emailActions";
 import { usePreloader } from "@/components/PreloaderContext";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { PixelButton } from "@/components/ui/PixelButton";
@@ -152,24 +153,9 @@ export default function BookConsole() {
     }
 
     try {
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          subject: `Launchpad Booking from ${data.name}`,
-          message: `Booking Scope Details:\n\nBudget Option Selected: ${data.budget}\nCustom Budget Target: ${data.customBudget || "None Specified"}\nTimeline Option Selected: ${data.timeline}\nCustom Timeline Target: ${data.customTimeline || "None Specified"}\nCompany metadata: ${data.company || "None"}`,
-          budget: data.budget,
-          timeline: data.timeline,
-          specs: data.specs,
-          customBudget: data.customBudget,
-          customTimeline: data.customTimeline,
-          customMessage: data.customMessage,
-        }),
-      });
+      const response = await sendBookingEmail(data);
 
-      if (response.ok) {
+      if (response.success) {
         setConsoleLogs((prev) => [
           ...prev,
           "DONE // PIPELINE STABILIZED - BLUEPRINT DISPATCHED",
@@ -180,7 +166,7 @@ export default function BookConsole() {
       } else {
         setConsoleLogs((prev) => [
           ...prev,
-          "ERR // SMTP DISPATCH FAILED [STATUS_500]",
+          `ERR // SMTP DISPATCH FAILED: ${response.error || "Unknown server error"}`,
         ]);
       }
     } catch (err: unknown) {
