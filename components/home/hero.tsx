@@ -3,6 +3,7 @@
 import { ArrowUpRight, Cpu, ShieldCheck, Terminal } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { usePreloader } from "@/components/PreloaderContext";
 import { PixelButton } from "@/components/ui/PixelButton";
 import { cn } from "@/lib/utils";
 
@@ -38,6 +39,7 @@ const letterVariants = {
 export default function Hero() {
   const [isMounted, setIsMounted] = useState(false);
   const [logIndex, setLogIndex] = useState(0);
+  const { isCompleted } = usePreloader();
 
   const mockLogs = [
     "SYS // INITIATING TRUST PROTOCOLS...",
@@ -77,9 +79,9 @@ export default function Hero() {
   return (
     <motion.main
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      animate={isCompleted ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="min-h-screen  mx-auto w-full p-4 sm:p-6 md:p-12 pt-28 sm:pt-32 md:pt-36 flex flex-col justify-center items-stretch text-foreground gap-8 md:gap-12"
+      className="min-h-screen mx-auto w-full p-4 sm:p-6 md:p-12 pt-28 sm:pt-32 md:pt-36 flex flex-col justify-center items-stretch text-foreground gap-8 md:gap-12"
     >
       {/* Top Layout Block: Side-by-Side (Headline Columns & Specs Sidebar) */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch w-full relative z-20">
@@ -99,7 +101,7 @@ export default function Hero() {
               <motion.div
                 variants={wordVariants}
                 initial="hidden"
-                animate="visible"
+                animate={isCompleted ? "visible" : "hidden"}
                 className="text-foreground"
               >
                 {splitWord("BUILT")}
@@ -129,12 +131,11 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Word 2: DIFFERENT (Outline styling) */}
-
+              {/* Word 2: DIFFRENT (Outline styling) */}
               <motion.div
                 variants={wordVariants}
                 initial="hidden"
-                animate="visible"
+                animate={isCompleted ? "visible" : "hidden"}
                 className="text-foreground"
               >
                 {splitWord("DIFFERENT")}
@@ -158,7 +159,7 @@ export default function Hero() {
 
           {/* Specs List Block */}
           <div className="space-y-4 bg-transparent p-5 backdrop-blur border border-accent/10 relative overflow-hidden">
-            <div className="absolute top-1 bg-amber-500 size-20 blur-[40rem]"></div>
+            <div className="absolute top-1 bg-amber-500 size-20 blur-[40rem]" />
 
             <h3 className="font-sans font-extrabold text-xs uppercase tracking-wider flex items-center gap-2">
               <Terminal size={14} className="text-accent" />
@@ -241,8 +242,14 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* Bottom Layout Block: Side-by-Side Details (Intro and Sometext) */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-10 border-t border-border/30 w-full relative z-20">
+      {/* Bottom Layout Block: Side-by-Side Details (Intro and Sometext) - Animates on viewport enter */}
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={isCompleted ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-10 border-t border-border/30 w-full relative z-20"
+      >
         {/* Intro Section */}
         <div className="space-y-3">
           <span className="font-mono text-[9px] text-accent uppercase font-bold tracking-widest block">
@@ -267,7 +274,7 @@ export default function Hero() {
             }
           </p>
         </div>
-      </section>
+      </motion.section>
     </motion.main>
   );
 }

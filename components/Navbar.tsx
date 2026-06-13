@@ -1,13 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { usePreloader } from "./PreloaderContext";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { PixelButton } from "./ui/PixelButton";
-import Link from "next/link";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { isCompleted } = usePreloader();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,7 +26,10 @@ const Navbar = () => {
   return (
     <header
       className={cn(
-        "fixed transition-all duration-300 ease-in-out z-40 flex justify-between items-center border-accent",
+        "fixed transition-all duration-500 ease-in-out z-40 flex justify-between items-center border-accent",
+        !isCompleted
+          ? "opacity-0 -translate-y-4 pointer-events-none"
+          : "opacity-100 translate-y-0 pointer-events-auto",
         isScrolled
           ? "top-0 left-0 right-0 p-3 sm:p-4 bg-background/90 border-b-2 backdrop-blur-md shadow-md"
           : "top-4 left-4 right-4 p-4 sm:p-6 bg-transparent border-2 backdrop-blur-sm",

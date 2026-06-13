@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import PixelPreloader from "@/components/PixelPreloader";
+import { PreloaderProvider } from "@/components/PreloaderContext";
 import TerminalBackground from "@/components/TerminalBackground";
 
 const fontSans = Syne({
@@ -53,10 +54,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange={false}
         >
-          <PixelPreloader />
-          <TerminalBackground />
-          <Navbar />
-          {children}
+          <PreloaderProvider>
+            <PixelPreloader />
+            <TerminalBackground />
+            <Navbar />
+            {children}
+          </PreloaderProvider>
         </ThemeProvider>
       </body>
     </html>

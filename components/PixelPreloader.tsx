@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { usePreloader } from "./PreloaderContext";
 
 // Number of grid cells (16 columns by 10 rows on desktop, 8 columns by 20 rows on mobile)
 const CELL_COUNT = 160;
@@ -33,6 +34,7 @@ export default function PixelPreloader() {
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isTransitionFinished, setIsTransitionFinished] = useState(false);
+  const { complete } = usePreloader();
 
   const [diagnostics, setDiagnostics] = useState({
     res: "1920X1080",
@@ -119,11 +121,12 @@ export default function PixelPreloader() {
     if (progress === 100) {
       const exitTimer = setTimeout(() => {
         setIsExiting(true);
+        complete();
       }, 700); // 700ms cinematic beat at 100%
 
       return () => clearTimeout(exitTimer);
     }
-  }, [progress]);
+  }, [progress, complete]);
 
   // Clean up component after transition is fully complete
   useEffect(() => {

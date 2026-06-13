@@ -2,10 +2,12 @@
 
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { usePreloader } from "./PreloaderContext";
 
 export default function TerminalBackground() {
   const [isMounted, setIsMounted] = useState(false);
   const [systime, setSystime] = useState("");
+  const { isCompleted } = usePreloader();
 
   // Setup client side listeners and dynamic timestamp ticker
   useEffect(() => {
@@ -26,16 +28,14 @@ export default function TerminalBackground() {
       {/* 1. Subtle Dot Matrix Schematic Grid */}
       <motion.div
         initial={{ opacity: 0 }}
-        // animate={{ opacity: 0.12 }}
-        // transition={{ duration: 1.8, ease: "easeOut", delay: 0.2 }}
+        animate={{ opacity: 0.12 }}
+        transition={{ duration: 1.8, ease: "easeOut", delay: 0.2 }}
         className="absolute inset-0"
         style={{
           backgroundImage:
             "radial-gradient(currentColor 1.5px, transparent 1.5px)",
           backgroundSize: "32px 32px",
         }}
-        whileInView={{ opacity: 0.12 }}
-        transition={{ duration: 1.8, ease: "easeOut", delay: 0.2 }}
       />
 
       {/* 2. CRT Line-raster scanlines */}
@@ -55,29 +55,29 @@ export default function TerminalBackground() {
       {/* Horizontal Line: Top division */}
       <motion.div
         initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 1.2, ease: "easeInOut", delay: 0.3 }}
+        animate={isCompleted ? { scaleX: 1 } : { scaleX: 0 }}
+        transition={{ duration: 1.2, ease: "easeInOut", delay: 0.2 }}
         className="absolute top-[12%] left-0 right-0 h-px bg-border/30"
       />
       {/* Horizontal Line: Bottom division */}
       <motion.div
         initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 1.2, ease: "easeInOut", delay: 0.5 }}
+        animate={isCompleted ? { scaleX: 1 } : { scaleX: 0 }}
+        transition={{ duration: 1.2, ease: "easeInOut", delay: 0.4 }}
         className="absolute bottom-[10%] left-0 right-0 h-px bg-border/30"
       />
       {/* Vertical Line: Left division */}
       <motion.div
         initial={{ scaleY: 0 }}
-        animate={{ scaleY: 1 }}
-        transition={{ duration: 1.5, ease: "easeInOut", delay: 0.4 }}
+        animate={isCompleted ? { scaleY: 1 } : { scaleY: 0 }}
+        transition={{ duration: 1.5, ease: "easeInOut", delay: 0.3 }}
         className="absolute left-[8%] top-0 bottom-0 w-px bg-border/30"
       />
       {/* Vertical Line: Right division */}
       <motion.div
         initial={{ scaleY: 0 }}
-        animate={{ scaleY: 1 }}
-        transition={{ duration: 1.5, ease: "easeInOut", delay: 0.6 }}
+        animate={isCompleted ? { scaleY: 1 } : { scaleY: 0 }}
+        transition={{ duration: 1.5, ease: "easeInOut", delay: 0.5 }}
         className="absolute right-[8%] top-0 bottom-0 w-px bg-border/30"
       />
 
@@ -87,15 +87,15 @@ export default function TerminalBackground() {
         <div className="absolute top-[14%] left-[10%] flex flex-col gap-1">
           <motion.span
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.4 }}
+            animate={isCompleted ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 0.8 }}
           >
             [GRID_LOC: 0x8F9A]
           </motion.span>
           <motion.span
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.6 }}
+            animate={isCompleted ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 1.0 }}
             className="text-accent/40 font-bold"
           >
             [SYS_NODE: Active]
@@ -106,8 +106,8 @@ export default function TerminalBackground() {
         <div className="absolute top-[14%] right-[10%] text-right flex flex-col gap-1">
           <motion.span
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
+            animate={isCompleted ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 0.9 }}
           >
             [REFRESH_RATE: 120Hz]
           </motion.span>
@@ -118,15 +118,15 @@ export default function TerminalBackground() {
         <div className="absolute bottom-[12%] left-[10%] flex flex-col gap-1">
           <motion.span
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.7 }}
+            animate={isCompleted ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 1.1 }}
           >
             [LATENCY: OPTIMAL]
           </motion.span>
           <motion.span
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.9 }}
+            animate={isCompleted ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 1.3 }}
           >
             [SEC: SHIELD_ON]
           </motion.span>
@@ -136,15 +136,15 @@ export default function TerminalBackground() {
         <div className="absolute bottom-[12%] right-[10%] text-right flex flex-col gap-1">
           <motion.span
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.8 }}
+            animate={isCompleted ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 1.2 }}
           >
             [KERN_V: 16.2.9]
           </motion.span>
           <motion.span
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.4 }}
-            transition={{ delay: 2.0 }}
+            animate={isCompleted ? { opacity: 0.4 } : { opacity: 0 }}
+            transition={{ delay: 1.4 }}
             className="text-accent/40 font-bold"
           >
             {"// BUILD_DIFFERENT //"}
@@ -153,10 +153,34 @@ export default function TerminalBackground() {
       </div>
 
       {/* 6. Dynamic glowing corner ticks (Brutalist grid junctions) */}
-      <div className="absolute top-[12%] left-[8%] translate-x-[-50%] translate-y-[-50%] w-2 h-2 border border-accent/40 bg-background" />
-      <div className="absolute top-[12%] right-[8%] translate-x-[50%] translate-y-[-50%] w-2 h-2 border border-accent/40 bg-background" />
-      <div className="absolute bottom-[10%] left-[8%] translate-x-[-50%] translate-y-[50%] w-2 h-2 border border-accent/40 bg-background" />
-      <div className="absolute bottom-[10%] right-[8%] translate-x-[50%] translate-y-[50%] w-2 h-2 border border-accent/40 bg-background" />
+      {isCompleted && (
+        <>
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.4 }}
+            className="absolute top-[12%] left-[8%] translate-x-[-50%] translate-y-[-50%] w-2 h-2 border border-accent/40 bg-background"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.6 }}
+            className="absolute top-[12%] right-[8%] translate-x-[50%] translate-y-[-50%] w-2 h-2 border border-accent/40 bg-background"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.5 }}
+            className="absolute bottom-[10%] left-[8%] translate-x-[-50%] translate-y-[50%] w-2 h-2 border border-accent/40 bg-background"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.7 }}
+            className="absolute bottom-[10%] right-[8%] translate-x-[50%] translate-y-[50%] w-2 h-2 border border-accent/40 bg-background"
+          />
+        </>
+      )}
     </div>
   );
 }
