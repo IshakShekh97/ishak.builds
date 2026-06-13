@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { PixelButton } from "./ui/PixelButton";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -30,9 +31,12 @@ const Navbar = () => {
       )}
     >
       <div className="flex items-center gap-2 sm:gap-3">
-        <span className="font-sans text-[10px] sm:text-xs uppercase  px-2 py-1 bg-accent text-accent-foreground font-bold tracking-widest">
+        <Link
+          href={"/"}
+          className="font-sans text-[10px] sm:text-xs uppercase  px-2 py-1 bg-accent text-accent-foreground font-bold tracking-widest"
+        >
           [ISHAK.BUILDS]
-        </span>
+        </Link>
         <span className="text-[10px] sm:text-xs font-mono text-muted-foreground hidden sm:inline">
           [VER_2026.06]
         </span>
@@ -45,7 +49,7 @@ const Navbar = () => {
 
       <div className="flex items-center gap-2 sm:gap-4">
         <ThemeSwitcher />
-        <PixelButton href="#connect">[CONNECT]</PixelButton>
+        <PixelButton href="/connect">[CONNECT]</PixelButton>
       </div>
     </header>
   );

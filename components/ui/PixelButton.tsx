@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface PixelButtonProps {
   children: React.ReactNode;
@@ -61,7 +62,7 @@ export function PixelButton({
 
   if (href) {
     return (
-      <a
+      <Link
         href={href}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -69,7 +70,7 @@ export function PixelButton({
         className={buttonClasses}
       >
         {content}
-      </a>
+      </Link>
     );
   }
 

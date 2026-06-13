@@ -157,7 +157,9 @@ export default function Hero() {
           </div>
 
           {/* Specs List Block */}
-          <div className="space-y-4">
+          <div className="space-y-4 bg-transparent p-5 backdrop-blur border border-accent/10 relative overflow-hidden">
+            <div className="absolute top-1 bg-amber-500 size-20 blur-[40rem]"></div>
+
             <h3 className="font-sans font-extrabold text-xs uppercase tracking-wider flex items-center gap-2">
               <Terminal size={14} className="text-accent" />
               ENGINEERING_SPECS
@@ -190,7 +192,9 @@ export default function Hero() {
               INTEGRITY_CHECK
             </h3>
 
-            <div className="font-mono text-[10px] bg-card/40 border border-border/30 p-3.5 flex flex-col gap-2 min-h-[140px] justify-start text-muted-foreground leading-snug">
+            <div className="font-mono text-[10px] border border-accent/30 p-3.5 flex flex-col gap-2 min-h-[140px] justify-start text-muted-foreground leading-snug relative bg-card/30 backdrop-blur-3xl overflow-hidden">
+              <div className="absolute bottom-0 right-0 size-20 bg-amber-600 blur-[200rem]"></div>
+
               {mockLogs.slice(0, logIndex + 1).map((log, index) => {
                 const isDone = log.startsWith("DONE");
                 const isSec = log.startsWith("SEC") || log.startsWith("PERF");

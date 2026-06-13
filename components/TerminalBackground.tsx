@@ -26,14 +26,16 @@ export default function TerminalBackground() {
       {/* 1. Subtle Dot Matrix Schematic Grid */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.12 }}
-        transition={{ duration: 1.8, ease: "easeOut", delay: 0.2 }}
+        // animate={{ opacity: 0.12 }}
+        // transition={{ duration: 1.8, ease: "easeOut", delay: 0.2 }}
         className="absolute inset-0"
         style={{
           backgroundImage:
             "radial-gradient(currentColor 1.5px, transparent 1.5px)",
           backgroundSize: "32px 32px",
         }}
+        whileInView={{ opacity: 0.12 }}
+        transition={{ duration: 1.8, ease: "easeOut", delay: 0.2 }}
       />
 
       {/* 2. CRT Line-raster scanlines */}
