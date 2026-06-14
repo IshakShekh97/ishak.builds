@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import PixelPreloader from "@/components/PixelPreloader";
 import { PreloaderProvider } from "@/components/PreloaderContext";
 import TerminalBackground from "@/components/TerminalBackground";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const fontSans = Syne({
   subsets: ["latin"],
@@ -56,11 +57,13 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <PreloaderProvider>
-            <PixelPreloader />
-            <TerminalBackground />
-            <Navbar />
-            {children}
-            <Footer />
+            <SmoothScroll>
+              <PixelPreloader />
+              <TerminalBackground />
+              <Navbar />
+              {children}
+              <Footer />
+            </SmoothScroll>
           </PreloaderProvider>
         </ThemeProvider>
       </body>

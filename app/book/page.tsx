@@ -227,7 +227,8 @@ export default function BookConsole() {
             {"// PROJECT_LAUNCH_PAD // BOOKING_CONSOLE"}
           </span>
           <h1 className="font-sans font-black text-5xl sm:text-7xl md:text-[8vw] uppercase tracking-tighter leading-none text-foreground">
-            <TextReveal text="BOOKING CONSOLE" />
+            <TextReveal text="BOOKING" />
+            <TextReveal text="CONSOLE" className="text-accent" />
           </h1>
         </div>
         <div className="font-mono text-xs text-muted-foreground md:text-right max-w-xs">

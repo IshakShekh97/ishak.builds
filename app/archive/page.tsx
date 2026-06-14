@@ -81,7 +81,8 @@ export default function Archive() {
             {"// CORE_REPOSITORY // ARCHIVE_V2"}
           </span>
           <h1 className="font-sans font-black text-5xl sm:text-7xl md:text-[8vw] uppercase tracking-tighter leading-none text-foreground">
-            <TextReveal text="PROJECT ARCHIVE" />
+            <TextReveal text="PROJECT" />
+            <TextReveal text="ARCHIVE" className="text-accent" />
           </h1>
         </div>
         <div className="font-mono text-xs text-muted-foreground md:text-right max-w-sm">

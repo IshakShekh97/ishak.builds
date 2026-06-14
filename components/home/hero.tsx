@@ -122,7 +122,7 @@ export default function Hero() {
                     href="/archive"
                     className="flex items-center gap-1.5 px-3 py-2 sm:px-5 sm:py-3"
                   >
-                    EXPLORE ARCHIVE <ArrowUpRight size={14} />
+                    EXPLORE ARTIFACTS <ArrowUpRight size={14} />
                   </PixelButton>
                   <PixelButton
                     href="/book"

@@ -18,8 +18,8 @@ const navigationLinks = [
 
 const socialLinks = [
   { label: "[ GITHUB ]", url: "https://github.com/IshakShekh97" },
-  { label: "[ LINKEDIN ]", url: "https://linkedin.com" },
-  { label: "[ INSTAGRAM ]", url: "https://instagram.com" },
+  // { label: "[ LINKEDIN ]", url: "https://linkedin.com" },
+  { label: "[ INSTAGRAM ]", url: "https://www.instagram.com/ishak.builds/" },
 ];
 
 export default function Footer() {
