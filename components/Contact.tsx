@@ -12,7 +12,7 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
-import { sendContactEmail } from "@/app/actions/emailActions";
+import { sendContactEmail } from "@/app/actions/email.action";
 import { Field } from "@/components/ui/field";
 import { usePreloader } from "./PreloaderContext";
 import { PixelButton } from "./ui/PixelButton";

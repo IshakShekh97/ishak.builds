@@ -2,11 +2,7 @@ import type { Metadata } from "next";
 import { JetBrains_Mono, Lora, Syne } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
-import "./globals.css";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import PixelPreloader from "@/components/PixelPreloader";
-import { PreloaderProvider } from "@/components/PreloaderContext";
+import "@/app/globals.css";
 import TerminalBackground from "@/components/TerminalBackground";
 import SmoothScroll from "@/components/SmoothScroll";
 
@@ -56,15 +52,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange={false}
         >
-          <PreloaderProvider>
-            <SmoothScroll>
-              <PixelPreloader />
-              <TerminalBackground />
-              <Navbar />
-              {children}
-              <Footer />
-            </SmoothScroll>
-          </PreloaderProvider>
+          <SmoothScroll>
+            <TerminalBackground />
+            {children}
+          </SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

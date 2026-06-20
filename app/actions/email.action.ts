@@ -1,31 +1,8 @@
 "use server";
 
+import { serverBookingSchema, serverContactSchema } from "@/lib/zod.schema";
 import nodemailer from "nodemailer";
-import * as z from "zod";
 
-// Server-side Zod validation schemas
-const serverContactSchema = z.object({
-  senderName: z.string().min(1, "Name is required"),
-  senderEmail: z.string().email("Invalid email address format"),
-  projectSubject: z.string().min(1, "Subject is required"),
-  clientMessage: z.string().min(5, "Message must be at least 5 characters"),
-});
-
-const serverBookingSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email address format"),
-  company: z.string().optional().nullable(),
-  budget: z.string().min(1, "Estimated budget selection is required"),
-  customBudget: z.string().optional().nullable(),
-  timeline: z.string().min(1, "Target timeline selection is required"),
-  customTimeline: z.string().optional().nullable(),
-  specs: z
-    .array(z.string())
-    .min(1, "Select at least one engineering specification"),
-  customMessage: z.string().optional().nullable(),
-});
-
-// Configure SMTP transport using Gmail credentials
 const getTransporter = () => {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASSWORD;

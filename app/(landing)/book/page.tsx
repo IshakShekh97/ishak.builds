@@ -15,7 +15,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
-import { sendBookingEmail } from "@/app/actions/emailActions";
+import { createBookingAction } from "@/app/actions/booking.action";
 import { usePreloader } from "@/components/PreloaderContext";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { PixelButton } from "@/components/ui/PixelButton";
@@ -153,7 +153,7 @@ export default function BookConsole() {
     }
 
     try {
-      const response = await sendBookingEmail(data);
+      const response = await createBookingAction(data);
 
       if (response.success) {
         setConsoleLogs((prev) => [

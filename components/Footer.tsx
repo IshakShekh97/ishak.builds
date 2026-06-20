@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { usePreloader } from "./PreloaderContext";
 import { PixelButton } from "./ui/PixelButton";
 import { TextReveal } from "./ui/TextReveal";
+import Link from "next/link";
 
 const navigationLinks = [
   { label: "[ CONNECT ]", url: "/book" },
@@ -146,6 +147,9 @@ export default function Footer() {
           </span>
           <span>BUILD: V2.1.0-PRODUCTION</span>
           <span>DEPLOY: VERCEL_EDGE</span>
+          <Link href={"/dashboard"} className="text-accent">
+            ADMIN
+          </Link>
         </div>
         <div className="flex items-center gap-1.5 text-right w-full sm:w-auto justify-between sm:justify-end">
           <span className="flex items-center gap-1 text-muted-foreground">

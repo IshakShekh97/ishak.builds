@@ -1,0 +1,179 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+model Project {
+  id         String @id @default(cuid())
+  num        String // e.g. "01 //"
+  title      String
+  slug       String @unique
+  category   String // e.g. "HIGH-PERFORMANCE DATA ROUTER"
+  year       String // e.g. "2026"
+  url        String // e.g. "/archive/lyntbrutt"
+  mockupType String // e.g. "terminal"
+
+  // From components/home/artifacts.tsx
+  description           String // business problem description
+  architecturalSolution String // architectural solution
+
+  // From app/archive/page.tsx
+  desc String // system description
+  sol  String // architectural win
+
+  // From app/archive/[slug]/page.tsx
+  subtitle    String // e.g. "SSR_PERFORMANCE_OVERHAUL"
+  challenge   String // e.g. "Optimizing Server-Side Rendering..."
+  solution    String // e.g. "Bypassed traditional layout execution loops..."
+  schemaTitle String // e.g. "PostgreSQL / Redis Schema Architecture"
+  tables      Json // e.g. [{ name: "UserMetaCache", columns: [...] }]
+  codeSnippet String // e.g. "// Next.js RSC Server Cache Resolver..."
+  metrics     Json // e.g. [{ label: "EDGE RESPONSE LATENCY", value: "< 12ms" }]
+
+  // Relations
+  techs Tech[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("project")
+}
+
+model Tech {
+  id   String @id @default(cuid())
+  name String @unique // e.g. "REACT", "NEXT.JS 15"
+  slug String @unique // e.g. "react", "next-js-15"
+
+  // Landing page scrolling row configuration
+  showOnLanding Boolean @default(false)
+  landingRow    Int? // e.g. 1 (row1) or 2 (row2)
+  landingOrder  Int     @default(0) // order within row
+
+  // Relations
+  projects Project[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tech")
+}
+
+model BioProfile {
+  id         String    @id @default(cuid())
+  name       String // e.g. "ISHAK.BUILDS"
+  initials   String    @default("IS")
+  avatarUrl  String? // Cloudinary URL
+  beaconText String    @default("SYSTEM_BIO_ROUTER_V2")
+  bio        String? // Bio description text
+  links      BioLink[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("bio_profile")
+}
+
+model BioLink {
+  id         String     @id @default(cuid())
+  label      String // e.g. "[ VIEW PORTFOLIO // ]"
+  desc       String? // e.g. "Primary full-stack digital showcase archive."
+  url        String // e.g. "/"
+  isExternal Boolean    @default(false)
+  order      Int        @default(0)
+  profileId  String
+  profile    BioProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("bio_link")
+}
+
+model Booking {
+  id             String   @id @default(cuid())
+  name           String
+  email          String
+  company        String?
+  budget         String
+  customBudget   String?
+  timeline       String
+  customTimeline String?
+  specs          String[]
+  customMessage  String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("booking")
+}

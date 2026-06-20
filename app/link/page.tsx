@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { usePreloader } from "@/components/PreloaderContext";
 
 const linkItems = [
   {
@@ -39,8 +38,6 @@ const linkItems = [
 ];
 
 export default function LinkBioRouter() {
-  const { isCompleted } = usePreloader();
-
   return (
     <main className="min-h-screen w-full flex flex-col justify-center items-center py-24 px-4 sm:px-6 relative select-none overflow-hidden">
       {/* Blueprint Grid Background */}
@@ -60,9 +57,7 @@ export default function LinkBioRouter() {
         {/* Profile Header Details */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={
-            isCompleted ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-          }
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, margin: "-80px" }}
           transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] as const }}
           className="flex flex-col items-center text-center gap-3 border border-border/20 bg-transparent backdrop-blur-[6px] p-6 shadow-[4px_4px_0px_var(--color-accent)] rounded-none"
