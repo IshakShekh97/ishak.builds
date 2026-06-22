@@ -3,7 +3,6 @@ import { JetBrains_Mono, Lora, Syne } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 import "@/app/globals.css";
-import TerminalBackground from "@/components/TerminalBackground";
 import SmoothScroll from "@/components/SmoothScroll";
 
 const fontSans = Syne({

@@ -1,7 +1,17 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
-import { Upload, RotateCw, ZoomIn, ZoomOut, Check, Crop, ArrowRight, AlertCircle } from "lucide-react";
+import {
+  AlertCircle,
+  ArrowRight,
+  Check,
+  Crop,
+  RotateCw,
+  Upload,
+  ZoomIn,
+  ZoomOut,
+} from "lucide-react";
+import type React from "react";
+import { useRef, useState } from "react";
 import { uploadToCloudinary } from "@/lib/cloudinary-client";
 import { cn } from "@/lib/utils";
 
@@ -26,14 +36,14 @@ export function ImageUploader({
   const [srcImage, setSrcImage] = useState<string | null>(null);
   const [croppedPreview, setCroppedPreview] = useState<string | null>(null);
   const [croppedBlob, setCroppedBlob] = useState<Blob | null>(null);
-  
+
   // Crop settings
   const [scale, setScale] = useState(1);
   const [rotation, setRotation] = useState(0); // 0, 90, 180, 270
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  
+
   // Upload states
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
@@ -51,7 +61,6 @@ export function ImageUploader({
         return "aspect-video w-full max-w-[400px]";
       case "4:3":
         return "aspect-[4/3] w-full max-w-[350px]";
-      case "1:1":
       default:
         return "w-[240px] h-[240px] rounded-none";
     }
@@ -62,7 +71,7 @@ export function ImageUploader({
   // File Handlers
   const handleFiles = (files: FileList) => {
     const file = files[0];
-    if (file && file.type.startsWith("image/")) {
+    if (file?.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = (e) => {
         if (e.target?.result) {
@@ -96,13 +105,13 @@ export function ImageUploader({
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+    if (e.dataTransfer.files?.[0]) {
       handleFiles(e.dataTransfer.files);
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files?.[0]) {
       handleFiles(e.target.files);
     }
   };
@@ -153,7 +162,7 @@ export function ImageUploader({
     const viewportHeight = viewport.clientHeight;
 
     // Set output target size, maintaining aspect ratio
-    let targetWidth = maxOutputWidth;
+    const targetWidth = maxOutputWidth;
     let targetHeight = maxOutputWidth;
 
     if (aspectRatio === "16:9") {
@@ -179,8 +188,6 @@ export function ImageUploader({
     const renderedWidth = img.clientWidth;
     const renderedHeight = img.clientHeight;
 
-    const finalScale = scale * destScaleX;
-
     // Apply translation offset from user pan
     const transX = offset.x * destScaleX;
     const transY = offset.y * destScaleY;
@@ -191,7 +198,7 @@ export function ImageUploader({
       -renderedWidth / 2 + transX / scale,
       -renderedHeight / 2 + transY / scale,
       renderedWidth * scale,
-      renderedHeight * scale
+      renderedHeight * scale,
     );
 
     // Convert canvas to Data URL for preview and Blob for upload
@@ -205,7 +212,7 @@ export function ImageUploader({
         }
       },
       "image/jpeg",
-      0.9
+      0.9,
     );
   };
 
@@ -222,11 +229,12 @@ export function ImageUploader({
       });
 
       setUploadedUrl(response.secure_url);
-      setUploadProgress(null);
       onUploadSuccess(response.secure_url);
-    } catch (err: any) {
       setUploadProgress(null);
-      setUploadError(err.message || "An error occurred during upload.");
+    } catch (err: unknown) {
+      setUploadProgress(null);
+      const msg = err instanceof Error ? err.message : String(err);
+      setUploadError(msg);
     }
   };
 
@@ -252,6 +260,8 @@ export function ImageUploader({
 
       {/* No Image State: Drag & Drop Zone */}
       {!srcImage && (
+        // biome-ignore lint/a11y/useKeyWithClickEvents: drag/drop click interface
+        // biome-ignore lint/a11y/noStaticElementInteractions: drag/drop click interface
         <div
           onDragEnter={handleDrag}
           onDragOver={handleDrag}
@@ -260,7 +270,7 @@ export function ImageUploader({
           onClick={triggerFileInput}
           className={cn(
             "border-2 border-dashed border-foreground/30 hover:border-accent bg-secondary/10 p-10 flex flex-col items-center justify-center gap-4 text-center cursor-crosshair transition-all select-none duration-300 relative min-h-[200px]",
-            dragActive && "border-accent bg-accent/5 scale-[0.99]"
+            dragActive && "border-accent bg-accent/5 scale-[0.99]",
           )}
         >
           <div className="w-12 h-12 border border-foreground/30 bg-background flex items-center justify-center text-muted-foreground group-hover:text-accent">
@@ -285,6 +295,7 @@ export function ImageUploader({
               [ STAGE_IMAGE_CROPPING ]
             </span>
             <button
+              type="button"
               onClick={handleReset}
               className="font-mono text-[9px] text-muted-foreground hover:text-red-500 uppercase border border-border/30 px-2 py-0.5"
             >
@@ -300,10 +311,10 @@ export function ImageUploader({
             onPointerUp={handlePointerUp}
             className={cn(
               "relative overflow-hidden bg-secondary/20 border-2 border-foreground cursor-move select-none flex items-center justify-center",
-              getAspectRatioClasses()
+              getAspectRatioClasses(),
             )}
           >
-            {/* Image to crop */}
+            {/* biome-ignore lint/performance/noImgElement: standard image tag needed for HTML5 Canvas manipulation */}
             <img
               ref={imgRef}
               src={srcImage}
@@ -320,7 +331,7 @@ export function ImageUploader({
             <div
               className={cn(
                 "absolute inset-0 pointer-events-none border-2 border-accent border-dashed mix-blend-difference bg-black/20",
-                isCircular && "rounded-full"
+                isCircular && "rounded-full",
               )}
             />
           </div>
@@ -330,9 +341,15 @@ export function ImageUploader({
             {/* Zoom Slider */}
             <div className="space-y-1">
               <div className="flex justify-between items-center font-mono text-[9px] text-muted-foreground">
-                <span className="flex items-center gap-1"><ZoomOut size={10} /> ZOOM OUT</span>
-                <span className="font-bold text-foreground">{Math.round(scale * 100)}%</span>
-                <span className="flex items-center gap-1"><ZoomIn size={10} /> ZOOM IN</span>
+                <span className="flex items-center gap-1">
+                  <ZoomOut size={10} /> ZOOM OUT
+                </span>
+                <span className="font-bold text-foreground">
+                  {Math.round(scale * 100)}%
+                </span>
+                <span className="flex items-center gap-1">
+                  <ZoomIn size={10} /> ZOOM IN
+                </span>
               </div>
               <input
                 type="range"
@@ -376,6 +393,7 @@ export function ImageUploader({
             </span>
             {!uploadedUrl && (
               <button
+                type="button"
                 onClick={() => setCroppedPreview(null)}
                 className="font-mono text-[9px] text-muted-foreground hover:text-accent uppercase border border-border/30 px-2 py-0.5"
               >
@@ -388,13 +406,17 @@ export function ImageUploader({
           <div
             className={cn(
               "overflow-hidden border-2 border-foreground flex items-center justify-center bg-secondary/15 select-all",
-              getAspectRatioClasses()
+              getAspectRatioClasses(),
             )}
           >
+            {/* biome-ignore lint/performance/noImgElement: cropped result preview */}
             <img
               src={croppedPreview}
               alt="Cropped Result Preview"
-              className={cn("w-full h-full object-cover", isCircular && "rounded-full")}
+              className={cn(
+                "w-full h-full object-cover",
+                isCircular && "rounded-full",
+              )}
             />
           </div>
 
@@ -419,7 +441,9 @@ export function ImageUploader({
             <div className="w-full border border-red-500/30 bg-red-500/5 p-3 flex gap-2 items-start text-red-500 font-mono text-[10px]">
               <AlertCircle size={14} className="shrink-0 mt-0.5" />
               <div>
-                <span className="font-bold uppercase block">UPLOAD_FAILURE:</span>
+                <span className="font-bold uppercase block">
+                  UPLOAD_FAILURE:
+                </span>
                 {uploadError}
               </div>
             </div>
@@ -449,7 +473,9 @@ export function ImageUploader({
               <div className="w-full space-y-3">
                 <div className="border border-emerald-500/30 bg-emerald-500/5 p-3 flex gap-2 items-center text-emerald-500 font-mono text-[10px] w-full justify-center">
                   <Check size={14} />
-                  <span className="font-bold uppercase">ASSET_STORED_IN_CLOUD</span>
+                  <span className="font-bold uppercase">
+                    ASSET_STORED_IN_CLOUD
+                  </span>
                 </div>
                 <button
                   type="button"

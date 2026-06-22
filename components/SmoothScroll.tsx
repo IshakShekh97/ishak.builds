@@ -14,7 +14,7 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       root
       options={{
         duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        easing: (t) => Math.min(1, 1.001 - 2 ** (-10 * t)),
         smoothWheel: true,
         // syncTouch enables smooth scrolling on touch/mobile devices
         syncTouch: true,

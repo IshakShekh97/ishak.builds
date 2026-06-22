@@ -1,7 +1,7 @@
 "use server";
 
-import { serverBookingSchema, serverContactSchema } from "@/lib/zod.schema";
 import nodemailer from "nodemailer";
+import { serverBookingSchema, serverContactSchema } from "@/lib/zod.schema";
 
 const getTransporter = () => {
   const user = process.env.SMTP_USER;

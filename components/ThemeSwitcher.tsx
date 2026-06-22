@@ -3,11 +3,11 @@
 import { useTheme } from "next-themes";
 import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 
-export function ThemeSwitcher() {
+export function ThemeSwitcher({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
-    <div className="">
+    <div className={className}>
       <AnimatedThemeToggler
         variant="square"
         theme={resolvedTheme === "dark" ? "dark" : "light"}

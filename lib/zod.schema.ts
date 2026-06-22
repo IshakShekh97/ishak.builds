@@ -40,13 +40,23 @@ export type SignInSchemaType = z.infer<typeof SignInSchema>;
 export const projectSchema = z.object({
   num: z.string().min(1, "Number prefix is required (e.g., '01 //')"),
   title: z.string().min(1, "Title is required"),
-  slug: z.string().min(1, "Slug is required").regex(/^[a-z0-9-]+$/, "Slug must be lowercase alphanumeric and hyphens only"),
+  slug: z
+    .string()
+    .min(1, "Slug is required")
+    .regex(
+      /^[a-z0-9-]+$/,
+      "Slug must be lowercase alphanumeric and hyphens only",
+    ),
   category: z.string().min(1, "Category is required"),
   year: z.string().min(4, "Year must be at least 4 digits"),
   url: z.string().min(1, "URL path is required (e.g., '/archive/slug')"),
-  mockupType: z.string().min(1, "Mockup type is required (e.g. 'terminal', 'matrix')"),
+  mockupType: z
+    .string()
+    .min(1, "Mockup type is required (e.g. 'terminal', 'matrix')"),
   description: z.string().min(5, "Business problem description is required"),
-  architecturalSolution: z.string().min(5, "Architectural solution is required"),
+  architecturalSolution: z
+    .string()
+    .min(5, "Architectural solution is required"),
   desc: z.string().min(5, "System description is required"),
   sol: z.string().min(5, "Architectural win is required"),
   subtitle: z.string().min(1, "Subtitle is required"),
@@ -70,7 +80,12 @@ export const projectSchema = z.object({
       return false;
     }
   }, "Metrics must be a valid JSON array of objects"),
-  imageUrl: z.string().url("Must be a valid URL").or(z.string().length(0)).nullable().optional(),
+  imageUrl: z
+    .string()
+    .url("Must be a valid URL")
+    .or(z.string().length(0))
+    .nullable()
+    .optional(),
   techIds: z.array(z.string()).default([]),
 });
 
@@ -78,7 +93,13 @@ export type ProjectSchemaType = z.infer<typeof projectSchema>;
 
 export const techSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  slug: z.string().min(1, "Slug is required").regex(/^[a-z0-9-]+$/, "Slug must be lowercase alphanumeric and hyphens only"),
+  slug: z
+    .string()
+    .min(1, "Slug is required")
+    .regex(
+      /^[a-z0-9-]+$/,
+      "Slug must be lowercase alphanumeric and hyphens only",
+    ),
   showOnLanding: z.boolean().default(false),
   landingRow: z.coerce.number().nullable().optional(),
   landingOrder: z.coerce.number().default(0),
@@ -89,7 +110,12 @@ export type TechSchemaType = z.infer<typeof techSchema>;
 export const bioProfileSchema = z.object({
   name: z.string().min(1, "Name is required"),
   initials: z.string().min(1, "Initials are required"),
-  avatarUrl: z.string().url("Must be a valid URL").or(z.string().length(0)).nullable().optional(),
+  avatarUrl: z
+    .string()
+    .url("Must be a valid URL")
+    .or(z.string().length(0))
+    .nullable()
+    .optional(),
   beaconText: z.string().min(1, "Beacon text is required"),
   bio: z.string().nullable().optional(),
 });
@@ -105,4 +131,3 @@ export const bioLinkSchema = z.object({
 });
 
 export type BioLinkSchemaType = z.infer<typeof bioLinkSchema>;
-

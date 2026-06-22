@@ -2,11 +2,11 @@
 
 import { Clock, Cpu, GitBranch, Shield, Terminal } from "lucide-react";
 import { motion } from "motion/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePreloader } from "./PreloaderContext";
 import { PixelButton } from "./ui/PixelButton";
 import { TextReveal } from "./ui/TextReveal";
-import Link from "next/link";
 
 const navigationLinks = [
   { label: "[ CONNECT ]", url: "/book" },
