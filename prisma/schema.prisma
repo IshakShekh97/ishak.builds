@@ -84,6 +84,7 @@ model Project {
   year       String // e.g. "2026"
   url        String // e.g. "/archive/lyntbrutt"
   mockupType String // e.g. "terminal"
+  imageUrl   String?
 
   // From components/home/artifacts.tsx
   description           String // business problem description

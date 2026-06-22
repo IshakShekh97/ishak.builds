@@ -43,7 +43,7 @@ export default function Footer() {
       whileInView={isCompleted ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       viewport={{ once: false, margin: "-50px" }}
       transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] as const }}
-      className="w-full bg-background border-t-2 border-foreground relative z-20 select-none py-16 px-4 sm:px-8 md:px-16 lg:px-24 flex flex-col gap-12 md:gap-18 font-mono text-xs text-muted-foreground overflow-hidden"
+      className="w-full bg-transparent backdrop-blur-[2px]  border-t-2 border-foreground relative z-20 select-none py-16 px-4 sm:px-8 md:px-16 lg:px-24 flex flex-col gap-12 md:gap-18 font-mono text-xs text-muted-foreground overflow-hidden"
     >
       {/* 1. Giant Brutalist Typographic Header Block */}
       <div className="border-b border-border/30 pb-12 w-full overflow-hidden">

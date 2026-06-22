@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import PixelPreloader from "@/components/PixelPreloader";
 import { PreloaderProvider } from "@/components/PreloaderContext";
+import TerminalBackground from "@/components/TerminalBackground";
 
 export default function RootLayout({
   children,
@@ -14,6 +15,7 @@ export default function RootLayout({
       <PreloaderProvider>
         <PixelPreloader />
         <Navbar />
+        <TerminalBackground />
         {children}
         <Footer />
       </PreloaderProvider>

@@ -52,10 +52,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange={false}
         >
-          <SmoothScroll>
-            <TerminalBackground />
-            {children}
-          </SmoothScroll>
+          <SmoothScroll>{children}</SmoothScroll>
         </ThemeProvider>
       </body>
     </html>
