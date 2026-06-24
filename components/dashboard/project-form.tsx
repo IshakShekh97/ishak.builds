@@ -58,6 +58,8 @@ export function ProjectForm({ initialData, availableTechs }: ProjectFormProps) {
       ? JSON.stringify(initialData.metrics, null, 2)
       : '[\n  {\n    "label": "LATENCY",\n    "value": "< 10ms"\n  }\n]',
     imageUrl: initialData?.imageUrl || "",
+    livePreviewUrl: initialData?.livePreviewUrl || "",
+    githubUrl: initialData?.githubUrl || "",
     techIds: initialData?.techs.map((t: Tech) => t.id) || [],
   };
 
@@ -155,7 +157,7 @@ export function ProjectForm({ initialData, availableTechs }: ProjectFormProps) {
             <FieldContent>
               <input
                 type="text"
-                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:outline-none font-mono text-xs uppercase"
+                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none font-mono text-xs uppercase"
                 placeholder="e.g. 01 //"
                 {...register("num")}
               />
@@ -173,7 +175,7 @@ export function ProjectForm({ initialData, availableTechs }: ProjectFormProps) {
             <FieldContent>
               <input
                 type="text"
-                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:outline-none font-mono text-xs uppercase"
+                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none font-mono text-xs uppercase"
                 placeholder="Project title..."
                 {...register("title")}
               />
@@ -191,7 +193,7 @@ export function ProjectForm({ initialData, availableTechs }: ProjectFormProps) {
             <FieldContent>
               <input
                 type="text"
-                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:outline-none font-mono text-xs"
+                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none font-mono text-xs"
                 placeholder="slug-identifier"
                 {...register("slug")}
               />
@@ -207,7 +209,7 @@ export function ProjectForm({ initialData, availableTechs }: ProjectFormProps) {
             <FieldContent>
               <input
                 type="text"
-                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:outline-none font-mono text-xs uppercase"
+                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none font-mono text-xs uppercase"
                 placeholder="e.g. HIGH-PERFORMANCE DATA ROUTER"
                 {...register("category")}
               />
@@ -225,7 +227,7 @@ export function ProjectForm({ initialData, availableTechs }: ProjectFormProps) {
             <FieldContent>
               <input
                 type="text"
-                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:outline-none font-mono text-xs uppercase"
+                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none font-mono text-xs uppercase"
                 placeholder="e.g. 2026"
                 {...register("year")}
               />
@@ -243,11 +245,47 @@ export function ProjectForm({ initialData, availableTechs }: ProjectFormProps) {
             <FieldContent>
               <input
                 type="text"
-                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:outline-none font-mono text-xs"
+                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none font-mono text-xs"
                 placeholder="e.g. /archive/slug"
                 {...register("url")}
               />
               <FieldError errors={errors.url ? [errors.url] : undefined} />
+            </FieldContent>
+          </Field>
+
+          <Field>
+            <FieldLabel>
+              <FieldTitle>Live Preview URL</FieldTitle>
+              <FieldDescription>
+                Public URL to the running deployment
+              </FieldDescription>
+            </FieldLabel>
+            <FieldContent>
+              <input
+                type="text"
+                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none font-mono text-xs"
+                placeholder="e.g. https://preview.domain.com"
+                {...register("livePreviewUrl")}
+              />
+              <FieldError errors={errors.livePreviewUrl ? [errors.livePreviewUrl] : undefined} />
+            </FieldContent>
+          </Field>
+
+          <Field>
+            <FieldLabel>
+              <FieldTitle>GitHub Repository URL</FieldTitle>
+              <FieldDescription>
+                Link to the codebase repository
+              </FieldDescription>
+            </FieldLabel>
+            <FieldContent>
+              <input
+                type="text"
+                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none font-mono text-xs"
+                placeholder="e.g. https://github.com/user/repo"
+                {...register("githubUrl")}
+              />
+              <FieldError errors={errors.githubUrl ? [errors.githubUrl] : undefined} />
             </FieldContent>
           </Field>
 
@@ -258,7 +296,7 @@ export function ProjectForm({ initialData, availableTechs }: ProjectFormProps) {
             </FieldLabel>
             <FieldContent>
               <select
-                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:outline-none font-mono text-xs uppercase rounded-none appearance-none"
+                className="bg-background border-2 border-foreground p-3 focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none font-mono text-xs uppercase rounded-none appearance-none"
                 {...register("mockupType")}
               >
                 <option value="terminal">TERMINAL_SHELL</option>

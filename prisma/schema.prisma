@@ -85,6 +85,8 @@ model Project {
   url        String // e.g. "/archive/lyntbrutt"
   mockupType String // e.g. "terminal"
   imageUrl   String?
+  livePreviewUrl String?
+  githubUrl      String?
 
   // From components/home/artifacts.tsx
   description           String // business problem description

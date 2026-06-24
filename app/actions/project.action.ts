@@ -23,9 +23,10 @@ export async function getProjectsAction() {
       include: {
         techs: true,
       },
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy: [
+        { year: "desc" },
+        { num: "asc" }
+      ],
     });
     return { success: true, data: projects };
   } catch (error: unknown) {
@@ -72,6 +73,8 @@ export async function createProjectAction(rawData: unknown) {
         url: data.url,
         mockupType: data.mockupType,
         imageUrl: data.imageUrl || null,
+        livePreviewUrl: data.livePreviewUrl || null,
+        githubUrl: data.githubUrl || null,
         description: data.description,
         architecturalSolution: data.architecturalSolution,
         desc: data.desc,
@@ -119,6 +122,8 @@ export async function updateProjectAction(id: string, rawData: unknown) {
         url: data.url,
         mockupType: data.mockupType,
         imageUrl: data.imageUrl || null,
+        livePreviewUrl: data.livePreviewUrl || null,
+        githubUrl: data.githubUrl || null,
         description: data.description,
         architecturalSolution: data.architecturalSolution,
         desc: data.desc,
@@ -161,3 +166,40 @@ export async function deleteProjectAction(id: string) {
     return { success: false, error: errMessage };
   }
 }
+
+export async function getPublicProjectsAction() {
+  try {
+    const projects = await prisma.project.findMany({
+      include: {
+        techs: true,
+      },
+      orderBy: [
+        { year: "desc" },
+        { num: "asc" }
+      ],
+    });
+    return { success: true, data: projects };
+  } catch (error: unknown) {
+    const errMessage = error instanceof Error ? error.message : "Unknown error";
+    return { success: false, error: errMessage };
+  }
+}
+
+export async function getPublicProjectBySlugAction(slug: string) {
+  try {
+    const project = await prisma.project.findUnique({
+      where: { slug },
+      include: {
+        techs: true,
+      },
+    });
+    if (!project) {
+      return { success: false, error: "Project not found" };
+    }
+    return { success: true, data: project };
+  } catch (error: unknown) {
+    const errMessage = error instanceof Error ? error.message : "Unknown error";
+    return { success: false, error: errMessage };
+  }
+}
+

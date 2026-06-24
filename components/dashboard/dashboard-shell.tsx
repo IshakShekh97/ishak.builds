@@ -65,7 +65,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
     },
     {
       label: "[ PROJECT_CRUD // ]",
-      href: "/dashboard/projects/create",
+      href: "/dashboard/projects",
       icon: FolderGit2,
     },
     {

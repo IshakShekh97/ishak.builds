@@ -22,17 +22,8 @@ export const serverBookingSchema = z.object({
 });
 
 export const SignInSchema = z.object({
-  email: z.string().email("Invalid Email"),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    .regex(/[0-9]/, "Password must contain at least one number")
-    .regex(
-      /[^A-Za-z0-9]/,
-      "Password must contain at least one special character",
-    ),
+  email: z.string().email("Invalid email address format"),
+  password: z.string().min(1, "Password is required"),
 });
 
 export type SignInSchemaType = z.infer<typeof SignInSchema>;
@@ -81,6 +72,18 @@ export const projectSchema = z.object({
     }
   }, "Metrics must be a valid JSON array of objects"),
   imageUrl: z
+    .string()
+    .url("Must be a valid URL")
+    .or(z.string().length(0))
+    .nullable()
+    .optional(),
+  livePreviewUrl: z
+    .string()
+    .url("Must be a valid URL")
+    .or(z.string().length(0))
+    .nullable()
+    .optional(),
+  githubUrl: z
     .string()
     .url("Must be a valid URL")
     .or(z.string().length(0))

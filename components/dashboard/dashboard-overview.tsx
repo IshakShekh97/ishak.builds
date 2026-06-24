@@ -41,6 +41,7 @@ export async function StatsOverview() {
       icon: FolderGit2,
       desc: "TOTAL_MOCKUP_ARCHIVES",
       color: "text-accent border-accent/20",
+      href: "/dashboard/projects",
     },
     {
       title: "Received Bookings",
@@ -48,6 +49,7 @@ export async function StatsOverview() {
       icon: CalendarDays,
       desc: "SMTP_COMM_TRANSMISSIONS",
       color: "text-blue-500 border-blue-500/20",
+      href: "/dashboard",
     },
     {
       title: "Tech stack nodes",
@@ -55,6 +57,7 @@ export async function StatsOverview() {
       icon: Cpu,
       desc: "COMPILER_DEFINITIONS",
       color: "text-emerald-500 border-emerald-500/20",
+      href: "/dashboard/tech",
     },
     {
       title: "BioProfile links",
@@ -62,6 +65,7 @@ export async function StatsOverview() {
       icon: Link2,
       desc: "ROUTED_REDIRECTS",
       color: "text-amber-500 border-amber-500/20",
+      href: "/dashboard/links",
     },
   ];
 
@@ -70,9 +74,10 @@ export async function StatsOverview() {
       {cards.map((card) => {
         const Icon = card.icon;
         return (
-          <div
+          <Link
             key={card.title}
-            className="border-2 border-foreground bg-secondary/5 p-5 flex flex-col justify-between relative shadow-[4px_4px_0px_var(--color-foreground)] select-none overflow-hidden min-h-[140px]"
+            href={card.href}
+            className="border-2 border-foreground bg-secondary/5 p-5 flex flex-col justify-between relative shadow-[4px_4px_0px_var(--color-foreground)] select-none overflow-hidden min-h-[140px] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[5px_5px_0px_var(--color-accent)] transition-all cursor-pointer group"
           >
             {/* Corner Decorators */}
             <div className="absolute top-0 left-0 w-2.5 h-2.5 border-t border-l border-foreground/30" />
@@ -82,14 +87,14 @@ export async function StatsOverview() {
 
             <div className="flex justify-between items-start">
               <div className="space-y-0.5">
-                <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground block">
+                <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground block group-hover:text-accent transition-colors">
                   {card.desc}
                 </span>
                 <h3 className="font-sans font-black text-xs uppercase text-foreground">
                   {card.title}
                 </h3>
               </div>
-              <div className="p-1.5 border border-foreground/10 bg-background text-muted-foreground">
+              <div className="p-1.5 border border-foreground/10 bg-background text-muted-foreground group-hover:border-accent transition-colors">
                 <Icon size={14} className={card.color.split(" ")[0]} />
               </div>
             </div>
@@ -102,7 +107,7 @@ export async function StatsOverview() {
                 [ONLINE]
               </span>
             </div>
-          </div>
+          </Link>
         );
       })}
     </div>
